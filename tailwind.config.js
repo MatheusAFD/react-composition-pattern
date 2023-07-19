@@ -7,6 +7,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'from-right': 'fromRight .5s',
+      },
+      keyframes: {
+        fromRight: {
+          '0%': {
+            transform: 'translateX(100%)',
+            opacity: 0,
+          },
+          '50%': {
+            transform: 'translateX(0)',
+            opacity: 1,
+          },
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
