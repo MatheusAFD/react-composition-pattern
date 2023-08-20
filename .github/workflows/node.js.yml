@@ -1,15 +1,14 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "main" ]
+  push: 
+    branches-ignore:
+      - '*'  
   pull_request:
-    branches: [ "main" ]
+    branches: [ 'main' ]  
 
 jobs:
- 
-  build:
-  
+  install:
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,6 +27,24 @@ jobs:
 
     - name: Install dependencies
       run: yarn
+
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js and Yarn
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
 
     - name: Build project
       run: yarn build
